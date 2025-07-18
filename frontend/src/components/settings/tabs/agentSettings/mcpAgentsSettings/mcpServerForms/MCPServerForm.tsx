@@ -3,6 +3,7 @@ import { Input, Select, Collapse, Form, Tooltip, Flex, Button } from "antd";
 import StdioServerForm from "./StdioServerForm";
 import SseServerForm from "./SseServerForm";
 import { MCPServerConfig, NamedMCPServerConfig } from "./types";
+import { useTranslation } from "react-i18next";
 
 export const DEFAULT_STDIO_PARAMS: MCPServerConfig = {
     type: "StdioServerParams",
@@ -33,6 +34,7 @@ export interface MCPServerFormProps {
 }
 
 const MCPServerForm: React.FC<MCPServerFormProps> = ({ server, idx, handleServerChange, removeServer }) => {
+    const { t, i18n } = useTranslation();
     const serverNamePattern = /^[A-Za-z0-9]+$/;
     const serverNameError = isEmpty(server.server_name) || !serverNamePattern.test(server.server_name);
 
@@ -70,23 +72,23 @@ const MCPServerForm: React.FC<MCPServerFormProps> = ({ server, idx, handleServer
                 key="1"
                 header={
                     <Flex align="center" gap="small">
-                        <Tooltip title={serverNameError ? 'Server Name is required and can only contain letters and numbers.' : ''} open={serverNameError ? undefined : false}>
+                        <Tooltip title={serverNameError ? t('Server Name is required and can only contain letters and numbers.') : ''} open={serverNameError ? undefined : false}>
                             <Input
                                 value={server.server_name}
-                                placeholder={`Server Name e.g. `}
+                                placeholder={t('Server Name e.g.')}
                                 status={serverNameError ? 'error' : ''}
                                 onChange={e => handleServerChange(idx, { ...server, server_name: e.target.value })}
                                 onClick={(e) => e.stopPropagation()}
                             />
                         </Tooltip>
                         <Button danger onClick={(e) => { e.stopPropagation(); removeServer(idx); }}>
-                            Remove
+                            {t('Remove')}
                         </Button>
                     </Flex>
                 }
             >
                 <Flex vertical gap="small">
-                    <Form.Item label="Server Type">
+                    <Form.Item label={t('Server Type')}>
                         <Select
                             value={server.server_params.type}
                             onChange={type => {

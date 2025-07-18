@@ -11,6 +11,7 @@ import { ModelConfig, ModelConfigFormProps } from "./modelConfigForms/types";
 import { DEFAULT_OPENAI } from "./modelConfigForms/OpenAIModelConfigForm";
 import { DEFAULT_AZURE } from "./modelConfigForms/AzureModelConfigForm";
 import { DEFAULT_OLLAMA } from "./modelConfigForms/OllamaModelConfigForm";
+import { useTranslation } from "react-i18next";
 
 interface ModelSelectorProps {
   onChange: (m: ModelConfig) => void;
@@ -110,6 +111,7 @@ export const PROVIDER_FORM_MAP: Record<string, { label: string, defaultValue: Mo
 };
 
 const ModelSelector: React.FC<ModelSelectorProps> = ({ onChange, value }) => {
+  const { t, i18n } = useTranslation();
   const provider = value?.provider;
   const providerFormEntry = provider ? PROVIDER_FORM_MAP[provider] : undefined;
   const FormComponent = providerFormEntry?.form;
@@ -156,7 +158,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ onChange, value }) => {
           <Flex gap="small" align="top" justify="start">
             <Select
               options={Object.entries(PROVIDER_FORM_MAP).map(([key, { label }]) => ({ value: key, label }))}
-              placeholder="Select a Model provider."
+              placeholder={t('Select a model provider')}
               value={provider}
               onChange={handleProviderChange}
               onClick={(e) => e.stopPropagation()}
@@ -166,7 +168,7 @@ const ModelSelector: React.FC<ModelSelectorProps> = ({ onChange, value }) => {
               providerFormEntry &&
               <Select
                 options={Object.entries(providerFormEntry.presets).map(([key, { label }]) => ({ value: key, label }))}
-                placeholder="Select a Preset"
+                placeholder={t('Select a preset')}
                 value={preset}
                 onChange={handlePresetChange}
                 onClick={(e) => e.stopPropagation()}

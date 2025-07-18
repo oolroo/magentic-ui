@@ -8,6 +8,7 @@ import { SettingsTabProps } from "../../types";
 import { ModelConfig } from "./modelSelector/modelConfigForms/types";
 import MCPAgentsSettings from "./mcpAgentsSettings/MCPAgentsSettings";
 import { SwitchChangeEventHandler } from "antd/es/switch";
+import { useTranslation } from "react-i18next";
 import { settingsAPI } from "../../../views/api";
 import { Prism, SyntaxHighlighterProps } from "react-syntax-highlighter";
 import { tomorrow } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -47,6 +48,7 @@ const AgentSettingsTab: React.FC<SettingsTabProps> = ({
   config,
   handleUpdateConfig,
 }) => {
+  const { t, i18n } = useTranslation();
   const [advanced, setAdvanced] = useState<boolean>(
     (config as any).advanced_agent_settings ?? false
   );
@@ -137,19 +139,19 @@ const AgentSettingsTab: React.FC<SettingsTabProps> = ({
   };
 
   const header = advanced
-    ? "Set the LLM for each agent."
-    : "Set the LLM for all agents.";
+    ? t('Set LLM for Each Agent.')
+    : t('Set LLM for All Agents.');
 
   return (
     <Flex vertical gap="small" justify="start">
       {hasConfigFile && (
         <Alert
-          message="LLM Configuration Override"
+          message={t('LLM Configuration Override')}
           description={
             <div>
               <Typography.Text>
-                Magentic-UI was started with an LLM config file ({configFilePath}).
-                LLM configurations set here will be ignored as they are overridden by the config file.
+                {t('Magentic-UI was started with an LLM config file')} ({configFilePath}).
+                {t('LLM configurations set here will be ignored as they are overridden by the config file.')}
               </Typography.Text>
               {configContent && (
                 <Collapse
@@ -158,7 +160,7 @@ const AgentSettingsTab: React.FC<SettingsTabProps> = ({
                   style={{ marginTop: 8 }}
                   items={[{
                     key: 'config',
-                    label: 'Show Config Content',
+                    label: t('Show Config Content'),
                     children: (
                       <div style={{ maxHeight: '300px', overflow: 'auto' }}>
                         <SyntaxHighlighter
@@ -187,9 +189,9 @@ const AgentSettingsTab: React.FC<SettingsTabProps> = ({
         <Flex gap="small" justify="start" align="center">
           <Typography.Text>{header}</Typography.Text>
         </Flex>
-        <Tooltip title="Toggle between Basic and Advanced settings.">
+        <Tooltip title={t('Toggle between Basic and Advanced settings.')}> 
           <Flex gap="small">
-            <Typography.Text>Advanced</Typography.Text>
+            <Typography.Text>{t('Advanced')}</Typography.Text>
             <Switch value={advanced} onChange={handleAdvancedToggle} />
           </Flex>
         </Tooltip>
@@ -228,7 +230,7 @@ const AgentSettingsTab: React.FC<SettingsTabProps> = ({
       )}
 
       <Collapse>
-        <Collapse.Panel key={1} header="Custom Agents">
+        <Collapse.Panel key={1} header={t('Custom Agents')}>
           <MCPAgentsSettings
             config={config}
             defaultModel={defaultModel}

@@ -6,6 +6,7 @@ from autogen_core import ComponentModel
 from autogen_core.models import ChatCompletionClient
 
 from .agents import USER_PROXY_DESCRIPTION, CoderAgent, FileSurfer, WebSurfer
+from .agents import ElectrialcalDocGenAgent
 from .agents.mcp import McpAgent
 from .agents.users import DummyUserProxy, MetadataUserProxy
 from .agents.web_surfer import WebSurferConfig
@@ -246,7 +247,20 @@ async def get_task_team(
         assert file_surfer is not None
         team_participants.extend([coder_agent, file_surfer])
     team_participants.extend(mcp_agents)
-
+    # add electridocgen agent
+    # TODO: add electradocgen model_client
+    electrial_gendoc = ElectrialcalDocGenAgent(
+        "electrial_gendoc",
+        model_client_file_surfer,
+        work_dir=paths.internal_run_dir,
+        bind_dir=paths.external_run_dir,
+        description = '''你是一个docx文档生成agent,
+                        负责生成项目所需要的文档，例如需求分析说明书。执行结束后会返回生成docx文档，代表着文档已经生成完毕。
+                        切记，如果有相关于文档生成的需求，例如需求分析说明书，则通过此agent就可以独立完成任务，而不需要其他agent来完成。也不需要在web上进行联网搜索。''',
+        system_message = "你是一个docx文档生成agent, 负责生成项目所需要的文档，例如需求分析说明书。执行结束后会返回生成docx文档，代表着文档已经生成完毕。",
+        model_client_stream = True,
+    )
+    team_participants.extend([electrial_gendoc])
     team = GroupChat(
         participants=team_participants,
         orchestrator_config=orchestrator_config,

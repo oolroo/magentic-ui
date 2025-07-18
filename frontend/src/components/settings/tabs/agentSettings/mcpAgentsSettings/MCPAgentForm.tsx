@@ -7,6 +7,7 @@ import { Button as MagenticButton } from '../../../../common/Button'
 import { MCPAgentConfig } from "./types";
 import { ModelConfig } from "../modelSelector/modelConfigForms/types";
 import { DEFAULT_OPENAI } from "../modelSelector/modelConfigForms/OpenAIModelConfigForm";
+import { useTranslation } from "react-i18next";
 
 interface MCPAgentFormProps {
   agent: MCPAgentConfig;
@@ -18,6 +19,7 @@ interface MCPAgentFormProps {
 }
 
 const MCPAgentForm: React.FC<MCPAgentFormProps> = ({ agent, defaultModel, advanced, idx, handleAgentChange, removeAgent, }) => {
+  const { t, i18n } = useTranslation();
   const nameError = !agent.name || agent.name.trim() === '';
   const descError = !agent.description || agent.description.trim() === '';
   const hasServer = Array.isArray(agent.mcp_servers) && agent.mcp_servers.length > 0;
@@ -62,7 +64,7 @@ const MCPAgentForm: React.FC<MCPAgentFormProps> = ({ agent, defaultModel, advanc
           <Flex align="center" justify="space-between" gap="small">
             <Tooltip title={nameError ? 'Name is required' : ''} open={nameError ? undefined : false}>
               <Input
-                placeholder="Enter the agent's name."
+                placeholder={t('Enter the agent\'s name.')}
                 value={agent.name}
                 status={nameError ? 'error' : ''}
                 onChange={e => handleAgentChange(idx, { ...agent, name: e.target.value })}
@@ -98,10 +100,10 @@ const MCPAgentForm: React.FC<MCPAgentFormProps> = ({ agent, defaultModel, advanc
             </>
           }
           <Tooltip title={descError ? 'Description is required' : ''} open={descError ? undefined : false}>
-            <Form.Item label="Description" required>
+            <Form.Item label={t('Description')} required>
               <Input.TextArea
                 value={agent.description}
-                placeholder="Describe what this agent can do. The orchestrator will use this description to determine when to hand off to this agent."
+                placeholder={t('what this agent can do. The orchestrator will use this description to determine when to hand off to this agent.')}
                 status={descError ? 'error' : ''}
                 onChange={e => handleAgentChange(idx, { ...agent, description: e.target.value })}
                 autoSize={{ minRows: 2, maxRows: 4 }}
@@ -135,7 +137,7 @@ const MCPAgentForm: React.FC<MCPAgentFormProps> = ({ agent, defaultModel, advanc
             </Collapse.Panel>
           </Collapse> */}
 
-          <Divider orientation="left" style={{ margin: "0px" }}>MCP Servers</Divider>
+          <Divider orientation="left" style={{ margin: "0px" }}>{t('MCP Servers')}</Divider>
           <Flex vertical gap="small">
             <Tooltip title={mcpServerError ? 'At least one MCP Server is required' : ''} open={mcpServerError ? undefined : false}>
               <List
@@ -153,12 +155,12 @@ const MCPAgentForm: React.FC<MCPAgentFormProps> = ({ agent, defaultModel, advanc
                     />
                   </List.Item>
                 )}
-                locale={{ emptyText: 'No MCP Servers. Click "Add MCP Server" to create one.' }}
+                locale={{ emptyText: t('No MCP Servers. Click "Add MCP Server" to create one.') }}
               />
             </Tooltip>
             <Divider orientation="left" style={{ margin: "0px" }}>
               <MagenticButton onClick={addServer} variant="primary">
-                + Add MCP Server
+                {t('+ Add MCP Server')}
               </MagenticButton>
             </Divider>
           </Flex>

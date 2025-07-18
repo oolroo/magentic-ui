@@ -7,6 +7,7 @@ import { DEFAULT_OPENAI } from "../modelSelector/modelConfigForms/OpenAIModelCon
 import { Typography } from "antd";
 import { SettingsTabProps } from "../../../types";
 import { ModelConfig } from "../modelSelector/modelConfigForms/types";
+import { useTranslation } from "react-i18next";
 
 const DEFAULT_AGENT: MCPAgentConfig = {
   name: "",
@@ -24,6 +25,7 @@ export interface MCPAgentsSettingsProps extends SettingsTabProps {
 }
 
 const MCPAgentsSettings: React.FC<MCPAgentsSettingsProps> = ({ config, handleUpdateConfig, defaultModel, advanced }) => {
+  const { t, i18n } = useTranslation();
   const value = config?.mcp_agent_configs || [];
 
   const handleAgentChange = (idx: number, updated: MCPAgentConfig) => {
@@ -43,10 +45,10 @@ const MCPAgentsSettings: React.FC<MCPAgentsSettingsProps> = ({ config, handleUpd
   return (
     <Flex vertical gap="small">
       <Typography.Text>
-        Extend Magentic-UI's capabilities by adding custom agents that connect to local or remote Model Context Protocol (MCP) Servers!
+        {t('Extend Magentic-UI\'s capabilities by adding custom agents that connect to local or remote Model Context Protocol (MCP) Servers!')}
       </Typography.Text>
       <Typography.Text>
-        Any number of agents are supported, and each agent requires at least one MCP Server.
+        {t('Any number of agents are supported, and each agent requires at least one MCP Server.')}
       </Typography.Text>
       <Divider style={{ margin: "0px" }} />
       <List
@@ -65,11 +67,11 @@ const MCPAgentsSettings: React.FC<MCPAgentsSettingsProps> = ({ config, handleUpd
             </List.Item>
           );
         }}
-        locale={{ emptyText: 'No MCP Agents. Click "Add MCP Agent" to create one.' }}
+        locale={{ emptyText: t('No MCP Agents. Click "Add MCP Agent" to create one.') }}
       />
       <Divider orientation="left" style={{ margin: "0px" }}>
         <MagenticButton onClick={addAgent} variant="primary">
-          + Add MCP Agent
+          {t('+ Add MCP Agent')}
         </MagenticButton>
       </Divider>
     </Flex>

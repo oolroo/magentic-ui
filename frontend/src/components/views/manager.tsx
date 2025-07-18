@@ -18,6 +18,7 @@ import { RunStatus } from "../types/datamodel";
 import ContentHeader from "../contentheader";
 import PlanList from "../features/Plans/PlanList";
 import McpServersList from "../features/McpServersConfig/McpServersList";
+import { useTranslation } from "react-i18next";
 
 interface SessionWebSocket {
   socket: WebSocket;
@@ -29,6 +30,7 @@ type SessionWebSockets = {
 };
 
 export const SessionManager: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingSession, setEditingSession] = useState<Session | undefined>();
@@ -144,7 +146,7 @@ export const SessionManager: React.FC = () => {
       setIsEditorOpen(false);
       setEditingSession(undefined);
     } catch (error) {
-      messageApi.error("Error saving session");
+      messageApi.error(t('Error saving session'));
       console.error(error);
     } finally {
       setIsLoading(false);
@@ -187,7 +189,7 @@ export const SessionManager: React.FC = () => {
       messageApi.success("Session deleted");
     } catch (error) {
       console.error("Error deleting session:", error);
-      messageApi.error("Error deleting session");
+      messageApi.error(t('Error deleting session'));
     } finally {
       setIsLoading(false);
     }
@@ -202,7 +204,7 @@ export const SessionManager: React.FC = () => {
       const data = await sessionAPI.getSession(selectedSession.id, user.email);
       if (!data) {
         // Session not found
-        messageApi.error("Session not found");
+        messageApi.error(t('Session not found'));
         window.history.pushState({}, "", window.location.pathname); // Clear URL
         if (sessions.length > 0) {
           setSession(sessions[0]); // Fall back to first session
@@ -215,7 +217,7 @@ export const SessionManager: React.FC = () => {
       window.history.pushState({}, "", `?sessionId=${selectedSession.id}`);
     } catch (error) {
       console.error("Error loading session:", error);
-      messageApi.error("Error loading session");
+      messageApi.error(t('Error loading session'));
       window.history.pushState({}, "", window.location.pathname); // Clear invalid URL
       if (sessions.length > 0) {
         setSession(sessions[0]); // Fall back to first session
@@ -248,7 +250,7 @@ export const SessionManager: React.FC = () => {
         }
       } catch (error) {
         console.error("Error updating session name:", error);
-        messageApi.error("Error updating session name");
+        messageApi.error(t('Error updating session name'));
       }
     }
   };
@@ -355,7 +357,7 @@ export const SessionManager: React.FC = () => {
       window.history.pushState({}, "", `?sessionId=${created.id}`);
     } catch (error) {
       console.error("Error creating default session:", error);
-      messageApi.error("Error creating default session");
+      messageApi.error(t('Error creating default session'));
     } finally {
       setIsLoading(false);
     }
@@ -380,7 +382,7 @@ export const SessionManager: React.FC = () => {
         >
           {isLoading && session?.id === s.id && (
             <div className="absolute inset-0 z-10 flex items-center justify-center">
-              <Spin size="large" tip="Loading session..." />
+              <Spin size="large" tip={t('Loading session...')} />
             </div>
           )}
           <ChatView

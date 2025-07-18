@@ -5,10 +5,12 @@ import { MCPAgentConfig } from "../../settings/tabs/agentSettings/mcpAgentsSetti
 import { Typography, Spin, Alert, Empty } from "antd";
 import McpServerCard from "./McpServerCard";
 import { MCPServerInfo } from "./types";
+import { useTranslation } from "react-i18next";
 
 const { Title, Text } = Typography;
 
 const McpServersList: React.FC = () => {
+  const { t, i18n } = useTranslation();
   const { user } = React.useContext(appContext);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -112,7 +114,7 @@ const McpServersList: React.FC = () => {
   if (isLoading) {
     return (
       <div className="p-4">
-        <Title level={2}>MCP Servers</Title>
+        <Title level={2}>{t('MCP Servers')}</Title>
         <div className="flex justify-center items-center h-64">
           <Spin size="large" />
         </div>
@@ -123,7 +125,7 @@ const McpServersList: React.FC = () => {
   if (error) {
     return (
       <div className="p-4">
-        <Title level={2}>MCP Servers</Title>
+        <Title level={2}>{t('MCP Servers')}</Title>
         <Alert
           message="Error"
           description={error}
@@ -136,7 +138,7 @@ const McpServersList: React.FC = () => {
 
   return (
     <div className="p-4">
-      <Title level={2}>MCP Servers</Title>
+      <Title level={2}>{t('MCP Servers')}</Title>
       <Text className="text-gray-600 dark:text-gray-400 mb-4 block">
         Manage Model Context Protocol servers to extend your agent's capabilities
       </Text>

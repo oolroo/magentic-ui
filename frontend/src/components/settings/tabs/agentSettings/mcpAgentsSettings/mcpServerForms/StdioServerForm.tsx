@@ -1,12 +1,14 @@
 import React from "react";
 import { Input, Form, Tooltip, Collapse, Flex } from "antd";
 import { StdioServerParams } from "./types";
+import { useTranslation } from "react-i18next";
 
 const StdioServerForm: React.FC<{
     value: StdioServerParams;
     idx: number;
     onValueChanged: (idx: number, updated: StdioServerParams) => void;
 }> = ({ value, idx, onValueChanged }) => {
+    const { t, i18n } = useTranslation();
     const stdioCommandError = !value.command || value.command.trim() === '';
     
     let command = value.command ?? "";
@@ -36,8 +38,8 @@ const StdioServerForm: React.FC<{
 
     return (
         <Flex vertical gap="small" style={{width: "100%"}}>
-            <Tooltip title={stdioCommandError ? 'Command is required' : 'Provide the command and arguments, e.g. "npx -y mcp-server-fetch"'}>
-                <Form.Item label="Command (including args)" required>
+            <Tooltip title={stdioCommandError ? t('Command is required') : t('Provide the command and arguments, e.g. \"npx -y mcp-server-fetch\"')}>
+                <Form.Item label={t('Command (including args)')} required>
                     <Input
                         placeholder="npx -y mcp-server-fetch"
                         value={command}
@@ -47,8 +49,8 @@ const StdioServerForm: React.FC<{
                 </Form.Item>
             </Tooltip>
             <Collapse>
-                <Collapse.Panel key="1" header={<h1>Optional Properties</h1>}>
-                    <Form.Item label="Read Timeout (seconds)">
+                <Collapse.Panel key="1" header={<h1>{t('Optional Properties')}</h1>}>
+                    <Form.Item label={t('Read Timeout (seconds)')}>
                         <Input
                             type="number"
                             value={value.read_timeout_seconds}
@@ -60,7 +62,7 @@ const StdioServerForm: React.FC<{
                             }
                         />
                     </Form.Item>
-                    <Form.Item label="Working Directory (cwd)">
+                    <Form.Item label={t('Working Directory (cwd)')}>
                         <Input
                             value={value.cwd || ''}
                             onChange={e =>
@@ -71,7 +73,7 @@ const StdioServerForm: React.FC<{
                             }
                         />
                     </Form.Item>
-                    <Form.Item label="Encoding">
+                    <Form.Item label={t('Encoding')}>
                         <Input
                             value={value.encoding || 'utf-8'}
                             onChange={e =>
@@ -82,7 +84,7 @@ const StdioServerForm: React.FC<{
                             }
                         />
                     </Form.Item>
-                    <Form.Item label="Encoding Error Handler">
+                    <Form.Item label={t('Encoding Error Handler')}>
                         <Input
                             value={value.encoding_error_handler || 'strict'}
                             onChange={e =>

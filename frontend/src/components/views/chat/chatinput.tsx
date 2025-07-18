@@ -30,6 +30,7 @@ import { planAPI } from "../api";
 import RelevantPlans from "./relevant_plans";
 import { IPlan } from "../../types/plan";
 import PlanView from "./plan";
+import { useTranslation } from "react-i18next";
 
 // Threshold for large text files (in characters)
 const LARGE_TEXT_THRESHOLD = 1500;
@@ -68,6 +69,7 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
     },
     ref
   ) => {
+    const { t, i18n } = useTranslation();
     const textAreaRef = React.useRef<HTMLTextAreaElement>(null);
     const textAreaDivRef = React.useRef<HTMLDivElement>(null);
     const [text, setText] = React.useState("");
@@ -247,12 +249,12 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
                 notificationApi.info({
                   message: (
                     <span className="text-sm">
-                      Large Text Converted to File
+                      {t('Large Text Converted to File')}
                     </span>
                   ),
                   description: (
                     <span className="text-sm text-secondary">
-                      Your pasted text has been attached as a file.
+                      {t('Your pasted text has been attached as a file.')}
                     </span>
                   ),
                   duration: 3,
@@ -699,12 +701,12 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
                     }}
                     placeholder={
                       runStatus === "awaiting_input"
-                        ? "Type your response here and let Magentic-UI know of any changes in the browser."
+                        ? t('Type your response here and let Agents know of any changes in the browser.')
                         : enable_upload
                         ? dragOver
-                          ? "Drop files here..."
-                          : "Type your message here..."
-                        : "Type your message here..."
+                          ? t('Drop files here...')
+                          : t('Type your message here...')
+                        : t('Type your message here...')
                     }
                     disabled={isInputDisabled}
                   />
@@ -735,7 +737,7 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
                             <Upload {...uploadProps} showUploadList={false}>
                               <span className="flex items-center gap-2">
                                 <PaperclipIcon className="w-4 h-4" />
-                                Attach File
+                                {t('Attach File')}
                               </span>
                             </Upload>
                           </Menu.Item>
@@ -743,7 +745,7 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
                           <Menu.SubMenu key="attach-plan" title="Attach Plan">
                             {allPlans.length === 0 ? (
                               <Menu.Item disabled key="no-plans">
-                                No plans available
+                                {t('No plans available')}
                               </Menu.Item>
                             ) : (
                               allPlans.map((plan: any) => (
@@ -762,7 +764,7 @@ const ChatInput = React.forwardRef<{ focus: () => void }, ChatInputProps>(
                     >
                       <Tooltip
                         title={
-                          <span className="text-sm">Attach File or Plan</span>
+                          <span className="text-sm">{t('Attach File or Plan')}</span>
                         }
                         placement="top"
                       >

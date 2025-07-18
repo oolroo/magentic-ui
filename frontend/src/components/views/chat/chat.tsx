@@ -28,6 +28,7 @@ import {
 } from "../../types/plan";
 import SampleTasks from "./sampletasks";
 import ProgressBar from "./progressbar";
+import { useTranslation } from "react-i18next";
 
 // Extend RunStatus for sidebar status reporting
 type SidebarRunStatus = BaseRunStatus | "final_answer_awaiting_input";
@@ -76,6 +77,7 @@ export default function ChatView({
   visible = true,
   onRunStatusChange,
 }: ChatViewProps) {
+  const { t, i18n } = useTranslation();
   const serverUrl = getServerUrl();
   const [error, setError] = React.useState<IStatus | null>({
     status: true,
@@ -1059,7 +1061,7 @@ export default function ChatView({
 
   const handleAcceptPlan = (text: string) => {
     if (currentRun?.status === "awaiting_input") {
-      const query = text || "Plan Accepted";
+      const query = text || t("Plan Accepted");
       handleInputResponse(query, [], true);
     }
   };
@@ -1151,7 +1153,7 @@ export default function ChatView({
               } mx-auto px-4 sm:px-6 md:px-8`}
             >
               <div className="text-secondary text-lg mb-6">
-                Enter a message to get started
+                {t('Enter a message to get started')}
               </div>
 
               <div className="w-full">
