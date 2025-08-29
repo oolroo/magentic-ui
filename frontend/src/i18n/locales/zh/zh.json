@@ -35,7 +35,7 @@
   "Ollma configuration applied": "已应用Ollma配置",
   "OpenAI configuration applied": "已应用OpenAI配置",
   "Failed to update model configuration": "更新模型配置失败",
-  "Agents can make mistakes. Please monitor its work and intervene if necessary.": "智能体可能会出错，请监控其工作并在必要时进行干预。",
+  "Agents can make mistakes. Please monitor its work and intervene if necessary.": "智能体可能会出错，请监控其工作并在必要时进行干预",
   "You must add at least one website to the Allowed Websites list or turn off this feature": "您必须在允许的网站列表中添加至少一个网站，或关闭此功能",
   "Warning: Settings changes will only apply when you create a new session": "警告：设置更改仅在创建新会话时生效",
   "Reset to Default": "重置为默认值",

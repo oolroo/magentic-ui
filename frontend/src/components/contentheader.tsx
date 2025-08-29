@@ -30,7 +30,7 @@ const ContentHeader = ({
   const [isSettingsOpen, setIsSettingsOpen] = React.useState(false);
 
   return (
-    <div className="sticky top-0 bg-primary">
+    <div className="sticky top-0 pl-2 pr-4 bg-primary">
       <div className="flex h-16 items-center justify-between">
         {/* Left side: Text and Sidebar Controls */}
         <div className="flex items-center">

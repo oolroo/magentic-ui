@@ -466,7 +466,7 @@ export const SessionManager: React.FC = () => {
 
       <div className="flex flex-1 relative">
         <div
-          className={`absolute left-0 top-0 h-full transition-all duration-200 ease-in-out ${
+          className={`absolute left-0 top-1 h-full transition-all duration-200 ease-in-out ${
             isSidebarOpen ? "w-77" : "w-0"
           }`}
         >
@@ -505,7 +505,7 @@ export const SessionManager: React.FC = () => {
         </div>
 
         <div
-          className={`flex-1 transition-all -mr-4 duration-200 w-[200px] ${
+          className={`flex-1 transition-all duration-200 w-[200px] ${
             isSidebarOpen ? "ml-64" : "ml-0"
           }`}
         >
@@ -523,7 +523,7 @@ export const SessionManager: React.FC = () => {
               />
             </div>
           ) : session && sessions.length > 0 ? (
-            <div className="pl-4">{chatViews}</div>
+            <div className="">{chatViews}</div>
           ) : (
             <div className="flex items-center justify-center h-full text-secondary">
               <Spin size="large" tip={"Loading..."} />

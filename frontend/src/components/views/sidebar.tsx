@@ -210,8 +210,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
     }
 
     return (
-      <div className="h-full border-r border-secondary">
-        <div className="mb-4">
+      <div className="h-full border-r border-secondary bg-secondary px-4">
+        <div className="mb-4 pt-2">
           <SubMenu
             items={[
               {
@@ -250,7 +250,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             </div>
 
             <div className="my-4 flex text-sm">
-              <div className="mr-2 w-full">
+              <div className="w-full">
                 <Tooltip title={t('Create New Session')}>
                   <Button
                     className="w-full"

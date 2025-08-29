@@ -1092,7 +1092,7 @@ export default function ChatView({
 
         <div
           ref={chatContainerRef}
-          className={`flex-1 overflow-y-auto scroll mt-1 min-h-0 relative w-full h-full border-t border-gray-200 dark:border-gray-700 pt-2 ${
+          className={`flex-1 overflow-y-auto scroll mt-1 min-h-0 relative w-full h-full pt-2 ${
             noMessagesYet && currentRun
               ? "flex items-center justify-center"
               : ""
