@@ -61,6 +61,49 @@ const DocumentIframe: React.FC<DocumentIframeProps> = ({
     };
   }, [docUrl]);
 
+  // Intercept anchor clicks within rendered DOCX to avoid full page refresh and jump within preview
+  React.useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target) return;
+      const anchor = target.closest('a') as HTMLAnchorElement | null;
+      if (!anchor) return;
+
+      const href = anchor.getAttribute('href') || '';
+      // Only handle in-document hash links
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        e.stopPropagation();
+        const rawId = href.slice(1);
+        const id = decodeURIComponent(rawId);
+        // Find target within the container
+        let targetEl: HTMLElement | null = null;
+        // Try by id first
+        targetEl = container.querySelector(`[id="${CSS.escape(id)}"]`) as HTMLElement | null;
+        // Fallback: some generators use name attribute
+        if (!targetEl) {
+          targetEl = container.querySelector(`[name="${CSS.escape(id)}"]`) as HTMLElement | null;
+        }
+
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else if (anchor.target !== '_blank' && /^(https?:)?\/\//.test(href)) {
+        // For external links, open in new tab to avoid navigating the app
+        e.preventDefault();
+        window.open(anchor.href, '_blank', 'noopener,noreferrer');
+      }
+    };
+
+    container.addEventListener('click', handleClick, true);
+    return () => {
+      container.removeEventListener('click', handleClick, true);
+    };
+  }, [containerRef.current]);
+
   if (!docUrl) {
     return (
       <div className="flex-1 w-full h-full min-h-0 flex items-center justify-center">

@@ -48,6 +48,8 @@ const AdvancedConfigEditor: React.FC<AdvancedConfigEditorProps> = ({
             return;
           }
           setEditorValue(yaml.dump(parsed));
+          // enable the 'Apply Changes' button
+          setHasUnsavedChanges(true);
         }
       } catch (e) {
         message.error("Failed to parse uploaded file.");

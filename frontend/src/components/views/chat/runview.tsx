@@ -604,8 +604,7 @@ const RunView: React.FC<RunViewProps> = ({
     >
       {/* Messages section */}
       <div
-        ref={threadContainerRef}
-        className={`items-start relative flex flex-col h-full overflow-y-auto ${
+        className={`items-start relative flex flex-col h-full overflow-hidden ${
           showDetailViewer &&
           novncPort !== undefined &&
           !isDetailViewerMinimized
@@ -615,8 +614,12 @@ const RunView: React.FC<RunViewProps> = ({
             : "w-full"
         } transition-all duration-300`}
       >
-        {/* Thread Section - use flex-1 for height, but remove overflow-y-auto */}
-        <div className="w-full flex-1">
+        {/* Thread Section - scrollable messages */}
+        <div
+          ref={threadContainerRef}
+          className="w-full flex-1 overflow-y-auto pr-2"
+          style={{ scrollbarGutter: "stable" }}
+        >
           {localMessages.length > 0 &&
             localMessages.map((msg: Message, idx: number) => {
               const isCurrentMessagePlan =
@@ -693,13 +696,11 @@ const RunView: React.FC<RunViewProps> = ({
           </div>
         </div>
 
-        {/* ChatInput - use sticky positioning to keep at bottom with full width */}
+        {/* ChatInput - separate non-scrolling footer */}
         <div
           ref={buttonsContainerRef}
-          className="sticky bottom-0 flex-shrink-0 w-full bg-background"
-          style={{
-            width: "100%", // Always take full width of parent
-          }}
+          className="flex-shrink-0 w-full bg-background"
+          style={{ width: "100%" }}
         >
           <ChatInput
             ref={chatInputRef}
